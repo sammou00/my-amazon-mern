@@ -1,6 +1,6 @@
 const validateUsername = (username) => {
-    const re = /^[a-zA-Z0-9]{3,}$/;
-    return re.test(username);
+    const pattern = /^[a-zA-Z0-9]{3,}$/;
+    return pattern.test(username);
 };
 
 export default validateUsername;
