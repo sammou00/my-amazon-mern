@@ -2,6 +2,8 @@ import express from 'express';
 
 import itemControllers from '../controllers/item.js';
 
+import verifyToken from '../middleware/verifyToken.js';
+
 const {
     getAllItems,
     getItem,
@@ -14,11 +16,11 @@ const {
 const router = express.Router();
 
 // routes
-router.get('/items', getAllItems);
-router.get('/items/:id', getItem);
-router.get('/items/user/:id', getUserItems);
-router.post('/items', createItem);
-router.put('/items/:id', updateItem);
-router.delete('/items/:id', deleteItem);
+router.get('/items', verifyToken, getAllItems);
+router.get('/items/:id', verifyToken, getItem);
+router.get('/items/user/:id', verifyToken, getUserItems);
+router.post('/items', verifyToken, createItem);
+router.put('/items/:id', verifyToken, updateItem);
+router.delete('/items/:id', verifyToken, deleteItem);
 
 export default router;

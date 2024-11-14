@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import Item from '../models/Item.js';
 
 const itemControllers = {
@@ -24,6 +25,7 @@ const itemControllers = {
             return res.status(500).json({ msg: err.message });
         }
     },
+
     getUserItems: async (req, res) => {
         const { id } = req.params;
         try {
