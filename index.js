@@ -81,6 +81,12 @@ app.use('/api', productRoutes);
 app.use('/api', paymentRoutes);
 app.use('/api', itemRoutes);
 
+if (process.env.NODE_ENV === 'production') {
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(PATH, 'dist', 'index.html'));
+    });
+}
+
 // handle 404
 app.use('*', (req, res) => {
     res.status(404).json({ message: '404 - Not Found' });
