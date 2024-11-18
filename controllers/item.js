@@ -12,9 +12,10 @@ const itemControllers = {
     },
     getItem: async (req, res) => {
         const { id } = req.params;
+        const { user_id } = req.body;
 
         try {
-            const item = await Item.findOne({ _id: id });
+            const item = await Item.findOne({ _id: id, user_id: user_id });
 
             if (item) {
                 res.status(200).json(item);
@@ -91,6 +92,20 @@ const itemControllers = {
                 res.status(200).json({ msg: 'Item deleted successfully!' });
             } else {
                 res.status(400).json({ msg: 'Item not found' });
+            }
+        } catch (err) {
+            res.status(500).json({ msg: err.message });
+        }
+    },
+    deleteUserItems: async (req, res) => {
+        const { id } = req.params;
+        try {
+            const deletedItems = await Item.deleteMany({ user_id: id });
+
+            if (deletedItems.deletedCount > 0) {
+                res.status(200).json({ msg: 'Items deleted successfully!' });
+            } else {
+                res.status(400).json({ msg: 'Items not found' });
             }
         } catch (err) {
             res.status(500).json({ msg: err.message });

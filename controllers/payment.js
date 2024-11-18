@@ -21,7 +21,7 @@ const paymentControllers = {
                 amount: amount * 100,
                 currency: 'usd'
             });
-            res.send({ clientSecret: paymentIntent.client_secret });
+            res.status(200).send({ clientSecret: paymentIntent.client_secret });
         } catch (err) {
             res.status(400).send({ err: err.message });
         }
