@@ -46,7 +46,19 @@ app.use(
 );
 
 // use helmet
-app.use(helmet());
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: ["'self'"],
+            imgSrc: [
+                "'self'",
+                'data:',
+                'https://www.backmarket.nl',
+                'https://d2e6ccujb3mkqf.cloudfront.net'
+            ]
+        }
+    })
+);
 
 // parses
 app.use(express.json());
