@@ -55,7 +55,8 @@ app.use(
                 'data:',
                 'https://www.backmarket.nl',
                 'https://d2e6ccujb3mkqf.cloudfront.net'
-            ]
+            ],
+            'script-src': ["'self'", 'https://js.stripe.com']
         }
     })
 );
