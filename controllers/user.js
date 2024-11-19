@@ -139,6 +139,54 @@ const userControllers = {
             console.error(err);
             res.status(500).json({ message: err.message });
         }
+    },
+    forgetPassword: async (req, res) => {
+        const { id } = req.params;
+        const { newPassword } = req.body;
+        try {
+            const user = await User.findOne({ _id: id });
+            if (user) {
+                const hashedPassword = hashPassword(newPassword);
+                user.password = hashedPassword;
+                await user.save();
+                res.status(200).json({
+                    message: 'Password updated successfully!'
+                });
+            } else {
+                res.status(404).json({ message: 'User not found!' });
+            }
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    },
+    getAllUsers: async (req, res) => {
+        try {
+            const users = await User.find();
+            if (users) {
+                res.status(200).json(users);
+            } else {
+                res.status(404).json({ message: 'No users found!' });
+            }
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    },
+    changeRole: async (req, res) => {
+        const { email, role } = req.body;
+        try {
+            const user = await User.findOne({ email: email });
+            if (user) {
+                user.role = role;
+                await user.save();
+                res.status(200).json({
+                    message: 'Role updated successfully!'
+                });
+            } else {
+                res.status(404).json({ message: 'User not found!' });
+            }
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
     }
 };
 
